@@ -985,7 +985,7 @@ token=$(cat token.txt); ab -n 100 -c 10 -H "Authorization: Bearer $token" http:/
 Untuk memastikan ketiganya bekerja sama secara adil untuk mengatur Riegel Channel maka implementasikan Proxy Bind pada Eisen untuk mengaitkan IP dari Frieren, Flamme, dan Fern.
 ### Penyelesaian
 
-Melakukan konfigurasi pada file ```/etc/bind/named.conf.local``` sebagai berikut
+Melakukan konfigurasi pada file ```/etc/nginx/sites-available/laravel-balancer``` sebagai berikut
 
 ```bash
 upstream laravel  {
