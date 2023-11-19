@@ -25,7 +25,68 @@ Soal Dapat diakses pada [Soal Praktikum Modul 3](https://docs.google.com/documen
 ## Soal 0
 Setelah mengalahkan Demon King, perjalanan berlanjut. Kali ini, kalian diminta untuk melakukan register domain berupa riegel.canyon.yyy.com untuk worker Laravel dan granz.channel.yyy.com untuk worker PHP (0) mengarah pada worker yang memiliki IP [prefix IP].x.1.
 ### Penyelesaian
-
+- Pertama, pada node Heiter(DNS Server) lakukan instalasi paket dengan perintah
+  ```
+  apt-get update
+  apt-get install bind9 -y
+  ```
+- Kedua, pada direktori ``` /etc/bind/named.conf.local```, edit file seperti dibawah ini
+  ```
+  zone "riegel.canyon.d13.com" {
+        type master;
+        file "/etc/bind/riegel/riegel.canyon.d13.com";
+  };
+  zone "granz.channel.d13.com" {
+        type master;
+        file "/etc/bind/granz/granz.channel.d13.com";
+  };
+  ```
+- Ketiga, buatlah direktori ```riegel``` pada direktori```/etc/bind/```
+  ```
+  mkdir /etc/bind/riegel
+  ```
+- Keempat, edit file pada direktori ``` /etc/bind/riegel/riegel.canyon.d13.com``` seperti dibawah ini
+  ```
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     riegel.canyon.d13.com. root.riegel.canyon.d13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      riegel.canyon.d13.com.
+  @       IN      A       10.28.2.3 ; IP Frieren
+  www     IN      CNAME   riegel.canyon.d13.com.
+  ```
+- Kelima, buatlah direktori ```granz``` pada direktori```/etc/bind/```
+  ```
+  mkdir /etc/bind/granz
+  ```
+- Keenam, edit file pada direktori ```/etc/bind/granz/granz.channel.d13.com``` seperti dibawah ini
+  ```
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     granz.channel.d13.com. root.granz.channel.d13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      granz.channel.d13.com.
+  @       IN      A       10.28.2.3 ; IP Lawine
+  www     IN      CNAME   granz.channel.d13.com.
+  ```
+- Ketujuh, lakukan restart pada bind9
+  ```
+  service bind9 restart
+  ```
 ## Soal 1
 Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.<br>
 Semua CLIENT harus menggunakan konfigurasi dari DHCP Server
